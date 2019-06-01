@@ -10,7 +10,7 @@ class MapHome extends Component {
 
   renderMap = () => {
     loadScipt(
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyB-0TudBN841q0BgO9EaRQlJ8LGI06zr-4&callback=initMap"
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBv9H6lrhZ0J3YGACY-NZZjdhiQj9S_3Wo&callback=initMap"
     );
     window.initMap = this.initMap;
   };
