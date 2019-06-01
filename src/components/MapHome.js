@@ -1,53 +1,55 @@
 import React, { Component } from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 /* eslint-disable */
 class MapHome extends Component {
+  coords = [
+    { lat: 6.700071, lng: -1.630783 },
+    { lat: 5.55602, lng: -0.1969 },
+    { lat: 5.7666636, lng: 0.6166642 }
+  ];
+
+  renderMap = () => {
+    loadScipt(
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyB-0TudBN841q0BgO9EaRQlJ8LGI06zr-4&callback=initMap"
+    );
+    window.initMap = this.initMap;
+  };
+
+  initMap = () => {
+    new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 6.700071, lng: -1.630783 },
+      zoom: 14
+    });
+  };
+
+  createMarker = () => {
+    new google.maps.Marker({
+      position: coords[0],
+      map: this.initMap,
+      title: "Hello MAps"
+    });
+  };
+
+  componentDidMount() {
+    this.renderMap();
+  }
+
   render() {
     return (
-      <Map google={this.props.google} zoom={14}>
-        <Marker onClick={this.onMarkerClick} name={"Current location"} />
-
-        <InfoWindow onClose={this.onInfoWindowClose}>
-          <div>{/* <h1>{this.state.selectedPlace.name}</h1> */}</div>
-        </InfoWindow>
-      </Map>
+      <React.Fragment>
+        <div className="container" id="map" />
+      </React.Fragment>
     );
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyBv9H6lrhZ0J3YGACYNZZjdhiQj9S_3Wo"
-})(MapHome);
+function loadScipt(url) {
+  let index = window.document.getElementsByTagName("script")[0];
+  let script = window.document.createElement("script");
+  script.src = url;
+  script.async = true;
+  script.defer = true;
+  index.parentNode.insertBefore(script, index);
+}
 
-// import React, { Component } from "react";
-// import GoogleMapReact from "google-map-react";
-
-// const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-// class SimpleMap extends Component {
-//   static defaultProps = {
-//     center: {
-//       lat: 59.95,
-//       lng: 30.33
-//     },
-//     zoom: 11
-//   };
-
-//   render() {
-//     return (
-//       // Important! Always set the container height explicitly
-//       <div style={{ height: "100vh", width: "100%" }}>
-//         <GoogleMapReact
-//           bootstrapURLKeys={{ key: "AIzaSyBv9H6lrhZ0J3YGACYNZZjdhiQj9S_3Wo" }}
-//           defaultCenter={this.props.center}
-//           defaultZoom={this.props.zoom}
-//         >
-//           <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-//         </GoogleMapReact>
-//       </div>
-//     );
-//   }
-// }
-
-// export default SimpleMap;
+export default MapHome;
